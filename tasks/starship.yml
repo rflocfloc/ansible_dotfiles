@@ -1,0 +1,16 @@
+# install and setup tmux
+
+- name: starship | install
+  tags: setup,config,starship,dotfiles
+  shell: "curl -sS https://starship.rs/install.sh | sh -s -- -y"
+
+- name: starship | remove conf
+  file:
+    path: "{{ starship[target] }}"
+    state: absent
+
+- name: starship | symlink dotfile
+  file:
+    path: "{{ starship[target]}}"
+    src: "{{ starship[cfg] }}"
+    state: link

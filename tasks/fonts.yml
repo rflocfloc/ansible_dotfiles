@@ -1,0 +1,20 @@
+# install nerd fonts and add them to terminal
+#
+
+- name: nerd fonts | download
+  tags: config, dotfiles, nerd fonts
+  get_url:
+    url: https://github.com/ryanoasis/nerd-fonts/releases/download/v3.1.1/JetBrainsMono.zip
+    dest: ~/.local/share/fonts/
+    decompress: true
+    mode: '0755'
+
+- name: nerd fonts | check for dconf
+  tags: config, dotfiles, nerd fonts, dconf
+  package:
+    name: dconf
+    state: present
+
+- name: nerd fonts | set terminal fonts
+  tags: config, dotfiles, nerd fonts
+  shell: "dconf write '/org/gnome/terminal/legacy/profiles:/:PROFILE_ID/font' 'Jet Brains Mono Regular Nerd Font Complete.otf'"

@@ -1,0 +1,20 @@
+---
+# defaults file for dotfiles_cfg
+#
+
+dotfiles_repo: "https://github.com/rflocfloc/linux_dotfiles.git"
+dotfiles_dir: "~/.dotfiles"
+
+
+bashrc:
+  target: "~/.bashrc"
+  cfg: "~/.dotfiles/bash/bashrc"
+
+tmux:
+  target: "~/.tmux.conf"
+  cfg: "~/.dotfiles/tmux/tmux.conf"
+
+starship:
+  target: "~/.config/starship.toml"
+  cfg: "~/.dotfiles/starship/starship.toml"
+

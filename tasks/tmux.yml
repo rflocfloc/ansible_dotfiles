@@ -1,0 +1,32 @@
+# install and setup tmux
+
+- name: tmux | install
+  tags: setup,config,tmux,dotfiles
+  package:
+    name: 
+      - tmux
+      - fzf
+      - zoxide
+    state: latest
+
+- name: tmux | clone plugins
+  tags: setup,config, tmux, dotfiles
+  block:
+    - name: tmux | plugins | make dir
+      file:
+        path: "~/.tmux/plugins/"
+        state: directory
+
+    - name: tmux | clone tpm repo
+      shell: "git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm"
+
+- name: tmux | remove conf
+  file:
+    path: "{{ tmux[target] }}"
+    state: absent
+
+- name: tmux | symlink dotfile
+  file:
+    path: "{{ tmux[target]}}"
+    src: "{{ tmux[cfg] }}"
+    state: link
