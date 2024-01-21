@@ -1,6 +1,7 @@
 
 - host: localhost
   connection: local
+  become: yes
   pre_tasks:
     - name: dotfiles | update .dotfiles
       tags: always
