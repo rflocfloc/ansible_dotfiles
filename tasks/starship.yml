@@ -5,12 +5,21 @@
   shell: "curl -sS https://starship.rs/install.sh | sh -s -- -y"
 
 - name: starship | remove conf
+  tags: setup,config,starship,dotfiles
   file:
     path: "{{ starship[target] }}"
     state: absent
 
 - name: starship | symlink dotfile
+  tags: setup,config,starship,dotfiles
   file:
     path: "{{ starship[target]}}"
     src: "{{ starship[cfg] }}"
     state: link
+
+- name: starship | bashrc eval
+  tags: setup,config,starship,dotfiles
+  lineinfile:
+    line: 'eval "$(starship init bash)"'
+    path: ~/.bashrc
+
