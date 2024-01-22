@@ -4,17 +4,24 @@
   tags: setup,config,starship,dotfiles
   shell: "curl -sS https://starship.rs/install.sh | sh -s -- -y"
 
+- name: starship | check conf
+  tags: setup,config,starship,dotfiles
+  stat:
+    path: "{{ starship.target}}"
+  register: starship_conf_exst
+
 - name: starship | remove conf
   tags: setup,config,starship,dotfiles
   file:
-    path: "{{ starship[target] }}"
+    path: "{{ starship.target }}"
     state: absent
+  when: starship_conf_exst.stat.exists 
 
 - name: starship | symlink dotfile
   tags: setup,config,starship,dotfiles
   file:
-    path: "{{ starship[target]}}"
-    src: "{{ starship[cfg] }}"
+    path: "{{ starship.target}}"
+    src: "{{ starship.cfg }}"
     state: link
 
 - name: starship | bashrc eval

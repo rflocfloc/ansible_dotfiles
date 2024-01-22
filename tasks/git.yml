@@ -1,0 +1,22 @@
+# install and setup tmux
+
+- name: git | check conf
+  tags: setup,config,git,dotfiles
+  stat:
+    path: "{{ git.target}}"
+  register: git_conf_exst
+
+- name: git | remove conf
+  tags: setup,config,git,dotfiles
+  file:
+    path: "{{ git.target }}"
+    state: absent
+  when: git_conf_exst.stat.exists 
+
+- name: git | symlink dotfile
+  tags: setup,config,git,dotfiles
+  file:
+    path: "{{ git.target}}"
+    src: "{{ git.cfg }}"
+    state: link
+

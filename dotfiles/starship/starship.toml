@@ -25,7 +25,7 @@ error_symbol = "[❯](red)"
 vicmd_symbol = "[❮](green)"
 
 [package]
-dissabled = true
+disabled = true
 
 [python]
 symbol = ' '

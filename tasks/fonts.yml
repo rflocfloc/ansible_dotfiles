@@ -1,20 +1,45 @@
 # install nerd fonts and add them to terminal
 #
+- name: nerd fonts | check fonts dir
+  stat:
+    path: ~/.local/share/fonts/
+  register: fonts_dir
+
+- name: nerd fonts | mkdir fonts
+  file:
+    path: ~/.local/share/fonts
+    state: directory
+  when: not fonts_dir.stat.exists
 
 - name: nerd fonts | download
   tags: config, dotfiles, nerd fonts
-  get_url:
-    url: https://github.com/ryanoasis/nerd-fonts/releases/download/v3.1.1/JetBrainsMono.zip
+  ansible.builtin.unarchive:
+    src: https://github.com/ryanoasis/nerd-fonts/releases/download/v3.1.1/JetBrainsMono.zip
     dest: ~/.local/share/fonts/
-    decompress: true
-    mode: '0755'
+    remote_src: yes
 
 - name: nerd fonts | check for dconf
   tags: config, dotfiles, nerd fonts, dconf
+  become: yes
   package:
-    name: dconf
+    name: 
+      - dconf
+      - python3-psutil 
     state: present
 
-- name: nerd fonts | set terminal fonts
-  tags: config, dotfiles, nerd fonts
-  shell: "dconf write '/org/gnome/terminal/legacy/profiles:/:PROFILE_ID/font' 'Jet Brains Mono Regular Nerd Font Complete.otf'"
+
+- name: gnome | terminal | set terminal configuration
+  tags: gnome,gnome-terminal
+  dconf:
+    key: "/org/gnome/terminal/legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9/{{ item.key }}"
+    value: "{{ item.value}}"
+  with_items:
+    #- { key: background-color, value: "'rgb(0,0,0)'" }
+    - { key: default-size-columns, value: "120" }
+    #- { key: foreground-color, value: "'rgb(170,170,170)'" }
+    - { key: scrollback-unlimited, value: "true" }
+    - { key: scrollbar-policy, value: "'never'" }
+    - { key: use-system-font, value: "false" }
+    #- { key: use-theme-colors, value: "false" }
+    #- { key: visible-name, value: "'Main'" }
+    - { key: font, value: "'JetBrainsMono Nerd Font Mono 12'" }

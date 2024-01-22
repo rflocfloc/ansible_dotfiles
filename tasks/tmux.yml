@@ -2,6 +2,7 @@
 
 - name: tmux | install
   tags: setup,config,tmux,dotfiles
+  become: true
   package:
     name: 
       - tmux
@@ -12,21 +13,33 @@
 - name: tmux | clone plugins
   tags: setup,config, tmux, dotfiles
   block:
+    - name: tmux | plugins | check dir
+      stat:
+        path: "~/.tmux/plugins/"
+      register: plugins_dir
+
     - name: tmux | plugins | make dir
       file:
         path: "~/.tmux/plugins/"
         state: directory
+      when: not plugins_dir.stat.exists
+
+    - name: tmux | assert tpm dir
+      stat:
+        path: "~/.tmux/plugins/tpm"
+      register: tpm_dir
 
     - name: tmux | clone tpm repo
       shell: "git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm"
+      when: not tpm_dir.stat.exists
 
 - name: tmux | remove conf
   file:
-    path: "{{ tmux[target] }}"
+    path: "{{ tmux.target }}"
     state: absent
 
 - name: tmux | symlink dotfile
   file:
-    path: "{{ tmux[target]}}"
-    src: "{{ tmux[cfg] }}"
+    path: "{{ tmux.target}}"
+    src: "{{ tmux.cfg }}"
     state: link

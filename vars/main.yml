@@ -18,3 +18,8 @@ starship:
   target: "~/.config/starship.toml"
   cfg: "~/.dotfiles/starship/starship.toml"
 
+git:
+  target: "~/.gitconfig"
+  cfg: "~/.dotfiles/git/gitconfig"
+
+

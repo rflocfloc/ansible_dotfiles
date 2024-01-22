@@ -1,15 +1,19 @@
 
-- host: localhost
+- hosts: localhost
   connection: local
-  become: yes
-  pre_tasks:
+  vars_files: vars/main.yml
+  tasks:
+  
     - name: dotfiles | update .dotfiles
       tags: always
       copy:
         src: dotfiles/
         dest: ~/.dotfiles
-        
-  tasks:
-    - starship.yml
-    - tmux.yml
-    - fonts.yml
+    
+    - import_tasks: tasks/git.yml 
+    - import_tasks: tasks/starship.yml
+    - import_tasks: tasks/tmux.yml
+    - import_tasks: tasks/fonts.yml
+
+    - name: eval | source bashrc
+      shell: source ~/.bashrc
