@@ -13,10 +13,4 @@
     state: absent
   when: git_conf_exst.stat.exists 
 
-- name: git | symlink dotfile
-  tags: setup,config,git,dotfiles
-  file:
-    path: "{{ git.target}}"
-    src: "{{ git.cfg }}"
-    state: link
 
