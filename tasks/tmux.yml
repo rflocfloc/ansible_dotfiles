@@ -8,7 +8,7 @@
       - tmux
       - fzf
       - zoxide
-    state: latest
+    state: present
 
 - name: tmux | clone plugins
   tags: setup,config, tmux, dotfiles
@@ -38,8 +38,4 @@
     path: "{{ tmux.target }}"
     state: absent
 
-- name: tmux | symlink dotfile
-  file:
-    path: "{{ tmux.target}}"
-    src: "{{ tmux.cfg }}"
-    state: link
+

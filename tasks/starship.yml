@@ -17,13 +17,6 @@
     state: absent
   when: starship_conf_exst.stat.exists 
 
-- name: starship | symlink dotfile
-  tags: setup,config,starship,dotfiles
-  file:
-    path: "{{ starship.target}}"
-    src: "{{ starship.cfg }}"
-    state: link
-
 - name: starship | bashrc eval
   tags: setup,config,starship,dotfiles
   lineinfile:

@@ -4,7 +4,7 @@
   vars_files: vars/main.yml
   tasks:
   
-    - name: dotfiles | update .dotfiles
+    - name: dotfiles | clone repo
       tags: always
       shell: "git clone {{ dotfiles_repo }} {{ dotfiles_dir }}"
     
@@ -13,5 +13,11 @@
     - import_tasks: tasks/tmux.yml
     - import_tasks: tasks/fonts.yml
 
-    - name: eval | source bashrc
-      shell: source ~/.bashrc
+    - name: dotfiles | stow | install
+      package:
+        name: stow
+        state: present
+
+    - name: dotfiles | stow | symlinks
+      shell: sh scripts/run_stow.sh
+
