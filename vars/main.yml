@@ -2,7 +2,7 @@
 # defaults file for dotfiles_cfg
 #
 
-dotfiles_repo: "https://github.com/rflocfloc/linux_dotfiles.git"
+dotfiles_repo: "https://github.com/rflocfloc/dotfiles.git"
 dotfiles_dir: "~/.dotfiles"
 
 

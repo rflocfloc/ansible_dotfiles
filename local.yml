@@ -6,9 +6,7 @@
   
     - name: dotfiles | update .dotfiles
       tags: always
-      copy:
-        src: dotfiles/
-        dest: ~/.dotfiles
+      shell: "git clone {{ dotfiles_repo }} {{ dotfiles_dir }}"
     
     - import_tasks: tasks/git.yml 
     - import_tasks: tasks/starship.yml
