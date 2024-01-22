@@ -6,7 +6,11 @@
   
     - name: dotfiles | clone repo
       tags: always
-      shell: "git clone {{ dotfiles_repo }} {{ dotfiles_dir }}"
+      ansible.builtin.git:
+        repo: "{{ dotfiles_repo }}" 
+        dest: "{{ dotfiles_dir }}"
+        update: yes
+        clone: yes
     
     - import_tasks: tasks/git.yml 
     - import_tasks: tasks/starship.yml
@@ -14,10 +18,21 @@
     - import_tasks: tasks/fonts.yml
 
     - name: dotfiles | stow | install
+      become: yes
       package:
         name: stow
         state: present
+    
+    - name: dotfiles | stow | get dirs
+      find:
+        paths: "{{ dotfiles_dir }}"
+        file_type: directory
+      register: stow_dirs
 
-    - name: dotfiles | stow | symlinks
-      shell: sh scripts/run_stow.sh
+    - name: dotfiles | stow | add symlinks
+      ansible.builtin.command: 
+        cmd: "stow {{item.path | basename}}"
+        chdir: "{{ dotfiles_dir}}"
+      when: "{{ stow_dirs.matched }} > 0 "
+      loop: "{{ stow_dirs.files }}"
 

@@ -1,22 +1,28 @@
 # install and setup tmux
 
+- name: starship | assert package
+  stat:
+    path: /usr/local/bin/starship
+  register: starship_package
+
 - name: starship | install
   tags: setup,config,starship,dotfiles
   become: yes
   shell: "curl -sS https://starship.rs/install.sh | sh -s -- -y"
+  when: not starship_package.stat.exists
 
 - name: starship | check conf
   tags: setup,config,starship,dotfiles
   stat:
     path: "{{ starship.target}}"
-  register: starship_conf_exst
+  register: starship_conf
 
 - name: starship | remove conf
   tags: setup,config,starship,dotfiles
   file:
     path: "{{ starship.target }}"
     state: absent
-  when: starship_conf_exst.stat.exists 
+  when: starship_conf.stat.exists 
 
 - name: starship | bashrc eval
   tags: setup,config,starship,dotfiles
