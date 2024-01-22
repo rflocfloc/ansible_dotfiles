@@ -2,6 +2,7 @@
 
 - name: starship | install
   tags: setup,config,starship,dotfiles
+  become: yes
   shell: "curl -sS https://starship.rs/install.sh | sh -s -- -y"
 
 - name: starship | check conf
