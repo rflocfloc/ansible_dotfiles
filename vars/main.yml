@@ -8,18 +8,18 @@ dotfiles_dir: "~/.dotfiles"
 
 bashrc:
   target: "~/.bashrc"
-  cfg: "~/.dotfiles/bash/bashrc"
+  cfg: "~/.dotfiles/bash/.bashrc"
 
 tmux:
   target: "~/.tmux.conf"
-  cfg: "~/.dotfiles/tmux/tmux.conf"
+  cfg: "~/.dotfiles/tmux/.tmux.conf"
 
 starship:
   target: "~/.config/starship.toml"
-  cfg: "~/.dotfiles/starship/starship.toml"
+  cfg: "~/.dotfiles/starship/.config/starship.toml"
 
 git:
   target: "~/.gitconfig"
-  cfg: "~/.dotfiles/git/gitconfig"
+  cfg: "~/.dotfiles/git/.gitconfig"
 
 
