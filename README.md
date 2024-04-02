@@ -2,7 +2,7 @@ Ansible personal dotfiles
 =========
 
 An ansible playbook for setting up personal dotfiles on linux. Some setups are made thinking of Gnome desktop environment.
-Current downloaded dotfiles [repo](https://github.com/rflocfloc/dotfiles) cen be edited in ```vars/main.yml```
+Dotfiles repo to use can be specified in ```vars/main.yml```. Default [dotfiles repo](https://github.com/rflocfloc/dotfiles).
 
 Requirements
 ------------
